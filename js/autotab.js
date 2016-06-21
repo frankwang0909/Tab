@@ -5,7 +5,9 @@ function gi(id) {
 window.onload = function() {
 	//当前高亮页签的索引
 	var index = 0;
+
 	var timer = null;
+	
 	//获取所有的页签和切换的内容
 	var lis = gi('notice-tit').getElementsByTagName('li'),
 		divs = gi('notice-content').getElementsByTagName('div');

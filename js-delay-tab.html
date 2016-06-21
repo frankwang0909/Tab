@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
 	<meta charset="UTF-8">
-	<title>用js实现自动Tab切换, 鼠标滑动切换</title>
+	<title>用js实现鼠标滑过Tab切换</title>
 	<link href="css/tab.css" rel="stylesheet" type="text/css">
 </head>
 <body>
@@ -59,65 +59,42 @@
 		</div>
 	</div>
 	<script type="text/javascript">
-		//自定义一个通过id获取元素的函数，后面可以简写
+		//自定义一个通过id获取元素的函数gi，后面可以简写
 		function gi(id) {
 			return "string" === typeof id?document.getElementById(id):id; 
-		};
+		}
 		window.onload = function() {
-			//当前高亮页签的索引
-			var index = 0;
-			var timer = null;
-			//获取所有的页签和切换的内容
-			var lis = gi('notice-tit').getElementsByTagName('li'),
+			//标签的索引
+			var index = 0,
+				timer = null,
+				lis =gi('notice-tit').getElementsByTagName('li'),
 				divs = gi('notice-content').getElementsByTagName('div');
-			//遍历每一个页签且绑定事件
+			if (lis.length != divs.length) {
+				return;		
+			}
+			//遍历所有的页签
 			for (var i = 0; i < lis.length; i++) {
 				lis[i].id = i;
-
 				lis[i].onmouseover = function() {
-					clearInterval(timer);
-					for (var j = 0; j < lis.length; j++) {
-						lis[j].className = "";
-						divs[j].style.display = "none";
+					//用that来引用当前的li
+					var  that = this;
+					//清除原有定时器
+					if (timer) {
+						clearTimeout(timer);
+						timer=null;
 					}
-					lis[this.id].className = "select";
-					divs[this.id].style.display = "block";
-				};
-
-				lis[i].onmouseout = function() {
-					timer = setInterval(function() {
-						index++;
-						if (index>=lis.length) {
-							index = 0;
-						}
-						//清除高亮样式
+					//设置延迟时间
+					timer = window.setTimeout(function() {
 						for (var j = 0; j < lis.length; j++) {
-							lis[j].className = "";
-							divs[j].style.display = "none";
+							lis[j].className= '';
+							divs[j].style.display="none";
 						}
-						//高亮显示当前页
-						lis[index].className = "select";
-						divs[index].style.display = "block";
-					},2000);
-				};
+						lis[that.id].className = 'select';
+						divs[that.id].style.display = 'block';
+					},500);
+				}
 			}
-
-			//添加定时器，改变当前高亮的索引
-			timer = setInterval(function() {
-				index++;
-				if (index>=lis.length) {
-					index = 0;
-				}
-				//清除高亮样式
-				for (var j = 0; j < lis.length; j++) {
-					lis[j].className = "";
-					divs[j].style.display = "none";
-				}
-				//高亮显示当前页
-				lis[index].className = "select";
-				divs[index].style.display = "block";
-			},2000);
-		};
+		}
 	</script>
 </body>
 </html>
