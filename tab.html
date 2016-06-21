@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="UTF-8">
+	<title>用js实现鼠标滑过Tab切换</title>
+	<style type="text/css">
+	*{padding: 0; margin:0;}
+	li{list-style: none;}
+	body{font-size: 12px;}
+	a{text-decoration: none;}
+	.notice{
+		width: 298px;
+		height: 98px;
+		margin:10px;
+		border: 1px solid #eee;
+		overflow: hidden;
+	}
+	.notice-tit{
+		height: 27px;
+		position: relative;
+		background-color: #f7f7f7;
+	}
+	.notice-tit ul{
+		position:absolute;
+		width: 301px;
+		left: -1px;
+	}
+	.notice-tit ul li{
+		float: left;
+		width: 58px;
+		height: 26px;
+		line-height: 26px;
+		padding: 0 1px;
+		text-align: center;
+		overflow: hidden;
+		border-bottom: 1px solid #eee;
+	}
+	.notice-tit ul li:hover,.notice-tit .select {
+		background-color: #fff;
+		border-bottom-color: #fff;
+		border-left: 1px solid #eee;
+		border-right: 1px solid #eee;
+		padding: 0;
+		font-weight: bold;
+	}
+	.notice-tit ul li a:link,.notice-tit ul li a:visited{
+		color: #000;
+	}
+	.notice-tit li:hover a,.notice-tit li a:hover,.notice-tit li:active{
+		color: #f90;
+	}
+	.notice-content .mod{
+		margin:10px;
+		display: none;
+	}
+	.notice-content .mod ul li{
+		float: left;
+		min-width: 130px;
+		margin-right: 5px;
+		overflow: hidden;
+	}
+	.notice-content .mod ul li a{
+		height: 25px;
+		line-height: 25px;
+		color: #000;
+	}
+	.notice-content .mod ul li a:hover,.notice-content .mod .active a{
+		color: #f90;
+	}
+	</style>
+</head>
+<body>
+	<div id="notice" class="notice">
+		<div id="notice-tit"  class="notice-tit">
+			<ul>
+				<li class="select"><a href="">公告</a></li>
+				<li><a href="">规则</a></li>
+				<li><a href="">论坛</a></li>
+				<li><a href="">安全</a></li>
+				<li><a href="">公益</a></li>
+			</ul>
+		</div>
+		<div id="notice-content" class="notice-content">
+			<div class="mod" style="display: block;">
+				<ul>
+					<li class="active"><a href="">马云携全体高管亮相投资者大会 详解2.0版阿里</a></li>
+					<li><a href="">三大战略七大业务板块</a></li>
+					<li><a href="">史上最严开店规则出台</a></li>
+				</ul>
+			</div>
+			<div class="mod">
+				<ul>
+					<li class="active"><a href="">淘宝争议处理规则变更</a></li>
+					<li><a href="">微淘平台管理规范变更</a></li>
+					<li><a href="">开店认证假货规则变更</a></li>
+					<li><a href="">恶意骚扰新增违规情形</a></li>
+				</ul>
+			</div>
+			<div class="mod">
+				<ul>
+					<li class="active"><a href="">淘宝招募卖家志愿者</a></li>
+					<li><a href="">阿里推出兼职神器</a></li>
+					<li><a href="">700家热风淘宝路</a></li>
+					<li><a href="">是赚钱还是骗子</a></li>
+				</ul>
+			</div>
+			<div class="mod">
+				<ul>
+					<li class="active"><a href="">谨防免费爬虫插件</a></li>
+					<li><a href="">卖家账户安全9守则</a></li>
+					<li><a href="">支付宝实名认证信息</a></li>
+					<li><a href="">账户没钱也被骗？</a></li>
+				</ul>
+			</div>
+			<div class="mod">
+				<ul>
+					<li class="active"><a href="">阿里联合公益计划启动</a></li>
+					<li><a href="">一图看懂联合公益计划</a></li>
+					<li><a href="">公益宝贝卖家发票索取</a></li>
+					<li><a href="">公益机构淘宝开店攻略</a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript">
+		//自定义一个通过id获取元素的函数，后面可以简写
+		function gi(id) {
+			return "string" === typeof id?document.getElementById(id):id; 
+		};
+		window.onload = function() {
+			//获取鼠标滑过或者点击的标签和要切换的内容元素
+			var titles = gi('notice-tit').getElementsByTagName('li');
+			var divs = gi('notice-content').getElementsByTagName('div');
+			if (titles.length != divs.length) {
+				return;
+			}
+			//遍历titles下所有的li
+			for (var i = 0; i < titles.length; i++) {
+				titles[i].id = i;
+				titles[i].onmouseover = function() {
+					for (var j = 0; j < titles.length; j++) {
+						//清除所有li上的class,取消它的选中状态。
+						titles[j].className ='';
+						//隐藏所有切换的内容div
+						divs[j].style.display = "none";
+					}
+					//设置当前为高亮显示
+					this.className = 'select';
+					divs[this.id].style.display = "block";
+				};
+			}
+		};
+	</script>
+</body>
+</html>
