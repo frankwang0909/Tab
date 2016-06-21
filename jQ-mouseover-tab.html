@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>jQuery实现鼠标滑过的tab切换</title>
+    <link href="css/tab.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<div id="notice" class="notice">
+    <div id="notice-tit"  class="notice-tit">
+        <ul>
+            <li class="select"><a href="">公告</a></li>
+            <li><a href="">规则</a></li>
+            <li><a href="">论坛</a></li>
+            <li><a href="">安全</a></li>
+            <li><a href="">公益</a></li>
+        </ul>
+    </div>
+    <div id="notice-content" class="notice-content">
+        <div class="mod" style="display: block;">
+            <ul>
+                <li class="active"><a href="">马云携全体高管亮相投资者大会 详解2.0版阿里</a></li>
+                <li><a href="">三大战略七大业务板块</a></li>
+                <li><a href="">史上最严开店规则出台</a></li>
+            </ul>
+        </div>
+        <div class="mod">
+            <ul>
+                <li class="active"><a href="">淘宝争议处理规则变更</a></li>
+                <li><a href="">微淘平台管理规范变更</a></li>
+                <li><a href="">开店认证假货规则变更</a></li>
+                <li><a href="">恶意骚扰新增违规情形</a></li>
+            </ul>
+        </div>
+        <div class="mod">
+            <ul>
+                <li class="active"><a href="">淘宝招募卖家志愿者</a></li>
+                <li><a href="">阿里推出兼职神器</a></li>
+                <li><a href="">700家热风淘宝路</a></li>
+                <li><a href="">是赚钱还是骗子</a></li>
+            </ul>
+        </div>
+        <div class="mod">
+            <ul>
+                <li class="active"><a href="">谨防免费爬虫插件</a></li>
+                <li><a href="">卖家账户安全9守则</a></li>
+                <li><a href="">支付宝实名认证信息</a></li>
+                <li><a href="">账户没钱也被骗？</a></li>
+            </ul>
+        </div>
+        <div class="mod">
+            <ul>
+                <li class="active"><a href="">阿里联合公益计划启动</a></li>
+                <li><a href="">一图看懂联合公益计划</a></li>
+                <li><a href="">公益宝贝卖家发票索取</a></li>
+                <li><a href="">公益机构淘宝开店攻略</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+<script src="http://cdn.staticfile.org/jquery/1.10.1/jquery.min.js"></script>
+<script type="text/javascript">
+$(function() {
+    var lis = $('.notice-tit li'),
+        divs = $('.notice-content div');
+    //绑定mouseover事件
+    lis.mouseover(function(){
+        //获取当前页的索引值
+        var i=$(this).index();
+        //清除所有li上的class,取消它的选中状态。
+        $(this).attr('class',"select").siblings('li').attr('class','');
+        //隐藏所有切换内容div
+        divs.hide();
+        //显示当前选中li对应的div
+        divs.eq(i).show(); 
+    });
+});
+</script>
+</body>
+</html>
+
+
