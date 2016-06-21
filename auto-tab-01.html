@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="UTF-8">
+	<title>用js实现自动Tab切换, 鼠标滑动切换</title>
+	<link href="css/tab.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+	<div id="notice" class="notice">
+		<div id="notice-tit"  class="notice-tit">
+			<ul>
+				<li class="select"><a href="">公告</a></li>
+				<li><a href="">规则</a></li>
+				<li><a href="">论坛</a></li>
+				<li><a href="">安全</a></li>
+				<li><a href="">公益</a></li>
+			</ul>
+		</div>
+		<div id="notice-content" class="notice-content">
+			<div class="mod" style="display: block;">
+				<ul>
+					<li class="active"><a href="">马云携全体高管亮相投资者大会 详解2.0版阿里</a></li>
+					<li><a href="">三大战略七大业务板块</a></li>
+					<li><a href="">史上最严开店规则出台</a></li>
+				</ul>
+			</div>
+			<div class="mod">
+				<ul>
+					<li class="active"><a href="">淘宝争议处理规则变更</a></li>
+					<li><a href="">微淘平台管理规范变更</a></li>
+					<li><a href="">开店认证假货规则变更</a></li>
+					<li><a href="">恶意骚扰新增违规情形</a></li>
+				</ul>
+			</div>
+			<div class="mod">
+				<ul>
+					<li class="active"><a href="">淘宝招募卖家志愿者</a></li>
+					<li><a href="">阿里推出兼职神器</a></li>
+					<li><a href="">700家热风淘宝路</a></li>
+					<li><a href="">是赚钱还是骗子</a></li>
+				</ul>
+			</div>
+			<div class="mod">
+				<ul>
+					<li class="active"><a href="">谨防免费爬虫插件</a></li>
+					<li><a href="">卖家账户安全9守则</a></li>
+					<li><a href="">支付宝实名认证信息</a></li>
+					<li><a href="">账户没钱也被骗？</a></li>
+				</ul>
+			</div>
+			<div class="mod">
+				<ul>
+					<li class="active"><a href="">阿里联合公益计划启动</a></li>
+					<li><a href="">一图看懂联合公益计划</a></li>
+					<li><a href="">公益宝贝卖家发票索取</a></li>
+					<li><a href="">公益机构淘宝开店攻略</a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript">
+		//自定义一个通过id获取元素的函数，后面可以简写
+		function gi(id) {
+			return "string" === typeof id?document.getElementById(id):id; 
+		};
+		window.onload = function() {
+			//当前高亮页签的索引
+			var index = 0;
+			var timer = null;
+			//获取所有的页签和切换的内容
+			var lis = gi('notice-tit').getElementsByTagName('li'),
+				divs = gi('notice-content').getElementsByTagName('div');
+			//遍历每一个页签且绑定事件
+			for (var i = 0; i < lis.length; i++) {
+				lis[i].id = i;
+
+				lis[i].onmouseover = function() {
+					clearInterval(timer);
+					for (var j = 0; j < lis.length; j++) {
+						lis[j].className = "";
+						divs[j].style.display = "none";
+					}
+					lis[this.id].className = "select";
+					divs[this.id].style.display = "block";
+				};
+
+				lis[i].onmouseout = function() {
+					timer = setInterval(function() {
+						index++;
+						if (index>=lis.length) {
+							index = 0;
+						}
+						//清除高亮样式
+						for (var j = 0; j < lis.length; j++) {
+							lis[j].className = "";
+							divs[j].style.display = "none";
+						}
+						//高亮显示当前页
+						lis[index].className = "select";
+						divs[index].style.display = "block";
+					},2000);
+				};
+			}
+
+			//添加定时器，改变当前高亮的索引
+			timer = setInterval(function() {
+				index++;
+				if (index>=lis.length) {
+					index = 0;
+				}
+				//清除高亮样式
+				for (var j = 0; j < lis.length; j++) {
+					lis[j].className = "";
+					divs[j].style.display = "none";
+				}
+				//高亮显示当前页
+				lis[index].className = "select";
+				divs[index].style.display = "block";
+			},2000);
+		};
+	</script>
+</body>
+</html>
